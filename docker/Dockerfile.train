@@ -1,0 +1,16 @@
+# Stage 1: Base with dependencies
+FROM python:3.11-slim AS base
+WORKDIR /app
+COPY requirements/train.txt .
+RUN pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch torchvision
+RUN pip install --no-cache-dir -r train.txt
+
+
+# Stage 2: Training
+FROM base AS training
+WORKDIR /app
+COPY src/ ./src/
+COPY configs/ ./configs/
+ENV PYTHONUNBUFFERED=1
+ENV CONFIG_PATH=/app/configs/training_config.yaml
+ENTRYPOINT ["python", "src/train.py"]
