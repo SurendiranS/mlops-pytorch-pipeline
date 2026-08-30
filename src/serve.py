@@ -6,7 +6,7 @@ from fastapi import FastAPI, File, HTTPException, UploadFile
 from PIL import Image
 from torchvision import transforms
 
-from model import FashionMNISTCNN
+from src.model import FashionMNISTCNN
 
 MODEL_PATH = os.getenv("MODEL_PATH", "./models/fashion_mnist_cnn.pth")
 DEVICE = torch.device("cpu")
